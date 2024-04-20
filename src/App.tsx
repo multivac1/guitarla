@@ -6,6 +6,21 @@ import { GuitarProps } from './types/GuitarProps';
 
 function App() {
     const [data, setData] = useState<GuitarProps[]>(db);
+    const [cart, setCart] = useState<GuitarProps[]>([]);
+
+    const addToCart = (item: GuitarProps) => {
+        const itemExists = cart.findIndex((guitar) => guitar.id === item.id);
+
+        if (itemExists >= 0) {
+            const updatedCart = [...cart];
+            updatedCart[itemExists].quantity++;
+            setCart(updatedCart);
+        } else {
+            item.quantity = 1;
+            setCart([...cart, item]);
+        }
+    };
+
     return (
         <>
             <Header />
@@ -15,7 +30,11 @@ function App() {
 
                 <div className="row mt-5">
                     {data.map((guitarData) => (
-                        <Guitar key={guitarData.id} guitarData={guitarData} />
+                        <Guitar
+                            key={guitarData.id}
+                            guitarData={guitarData}
+                            addToCart={addToCart}
+                        />
                     ))}
                 </div>
             </main>

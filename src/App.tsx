@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Guitar from './components/Guitar';
 import { db } from './data/db';
 import { GuitarProps } from './types/GuitarProps';
 
 function App() {
+    const initialCart = () => {
+        const getCartFromStorage = localStorage.getItem('cart');
+
+        return getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
+    };
     const [data, setData] = useState<GuitarProps[]>(db);
-    const [cart, setCart] = useState<GuitarProps[]>([]);
+    const [cart, setCart] = useState<GuitarProps[]>(initialCart);
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
 
     const MAX_ITEMS: number = 5;
     const MIN_ITEMS: number = 1;

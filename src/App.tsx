@@ -8,10 +8,14 @@ function App() {
     const [data, setData] = useState<GuitarProps[]>(db);
     const [cart, setCart] = useState<GuitarProps[]>([]);
 
+    const MAX_ITEMS: number = 5;
+    const MIN_ITEMS: number = 1;
+
     const addToCart = (item: GuitarProps) => {
         const itemExists = cart.findIndex((guitar) => guitar.id === item.id);
 
         if (itemExists >= 0) {
+            if (cart[itemExists].quantity >= MAX_ITEMS) return;
             const updatedCart = [...cart];
             updatedCart[itemExists].quantity++;
             setCart(updatedCart);
@@ -21,9 +25,51 @@ function App() {
         }
     };
 
+    const removeFromCart = (id: number) => {
+        const itemToDelete = cart.filter((guitar) => guitar.id !== id);
+
+        setCart(itemToDelete);
+    };
+
+    const decreaseQty = (id: number) => {
+        const updatedCart = cart.map((guitar) => {
+            if (guitar.id === id && guitar.quantity > MIN_ITEMS) {
+                return {
+                    ...guitar,
+                    quantity: guitar.quantity - 1,
+                };
+            }
+            return guitar;
+        });
+
+        setCart(updatedCart);
+    };
+
+    const cleanCart = () => setCart([]);
+
+    const increaseQty = (id: number) => {
+        const updatedCart = cart.map((guitar) => {
+            if (guitar.id === id && guitar.quantity < MAX_ITEMS) {
+                return {
+                    ...guitar,
+                    quantity: guitar.quantity + 1,
+                };
+            }
+            return guitar;
+        });
+
+        setCart(updatedCart);
+    };
+
     return (
         <>
-            <Header />
+            <Header
+                cart={cart}
+                cleanCart={cleanCart}
+                removeFromCart={removeFromCart}
+                decreaseQty={decreaseQty}
+                increaseQty={increaseQty}
+            />
 
             <main className="container-xl mt-5">
                 <h2 className="text-center">Nuestra Colección</h2>

@@ -10,7 +10,7 @@ function App() {
 
         return getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
     };
-    const [data] = useState<GuitarProps[]>(db);
+    const [data] = useState(db);
     const [cart, setCart] = useState<GuitarProps[]>(initialCart);
 
     useEffect(() => {

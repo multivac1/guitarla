@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { GuitarProps } from '../types/GuitarProps';
 
 export const useCart = () => {
@@ -12,6 +12,13 @@ export const useCart = () => {
     };
 
     const [cart, setCart] = useState<GuitarProps[]>(initialCart);
+
+    const isEmpty: boolean = useMemo(() => cart.length === 0, [cart]);
+    const total: number = useMemo(
+        () =>
+            cart.reduce((total, item) => total + item.quantity * item.price, 0),
+        [cart]
+    );
 
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
@@ -75,5 +82,7 @@ export const useCart = () => {
         decreaseQty,
         cleanCart,
         increaseQty,
+        isEmpty,
+        total,
     };
 };

@@ -1,74 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { db } from './data/db';
+import { useCart } from './hooks/useCart';
 import Header from './components/Header';
 import Guitar from './components/Guitar';
-import { db } from './data/db';
-import { GuitarProps } from './types/GuitarProps';
 
 function App() {
-    const initialCart = () => {
-        const getCartFromStorage = localStorage.getItem('cart');
-
-        return getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
-    };
     const [data] = useState(db);
-    const [cart, setCart] = useState<GuitarProps[]>(initialCart);
-
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
-
-    const MAX_ITEMS: number = 5;
-    const MIN_ITEMS: number = 1;
-
-    const addToCart = (item: GuitarProps) => {
-        const itemExists = cart.findIndex((guitar) => guitar.id === item.id);
-
-        if (itemExists >= 0) {
-            if (cart[itemExists].quantity >= MAX_ITEMS) return;
-            const updatedCart = [...cart];
-            updatedCart[itemExists].quantity++;
-            setCart(updatedCart);
-        } else {
-            item.quantity = 1;
-            setCart([...cart, item]);
-        }
-    };
-
-    const removeFromCart = (id: number) => {
-        const itemToDelete = cart.filter((guitar) => guitar.id !== id);
-
-        setCart(itemToDelete);
-    };
-
-    const decreaseQty = (id: number) => {
-        const updatedCart = cart.map((guitar) => {
-            if (guitar.id === id && guitar.quantity > MIN_ITEMS) {
-                return {
-                    ...guitar,
-                    quantity: guitar.quantity - 1,
-                };
-            }
-            return guitar;
-        });
-
-        setCart(updatedCart);
-    };
-
-    const cleanCart = () => setCart([]);
-
-    const increaseQty = (id: number) => {
-        const updatedCart = cart.map((guitar) => {
-            if (guitar.id === id && guitar.quantity < MAX_ITEMS) {
-                return {
-                    ...guitar,
-                    quantity: guitar.quantity + 1,
-                };
-            }
-            return guitar;
-        });
-
-        setCart(updatedCart);
-    };
+    const {
+        cart,
+        addToCart,
+        cleanCart,
+        removeFromCart,
+        decreaseQty,
+        increaseQty,
+    } = useCart();
 
     return (
         <>

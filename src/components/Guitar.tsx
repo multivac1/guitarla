@@ -1,12 +1,6 @@
-import { GuitarProps } from '../types/GuitarProps';
+import { GuitarProps } from '../types';
 
-const Guitar = ({
-    guitarData,
-    addToCart,
-}: {
-    guitarData: GuitarProps;
-    addToCart: (item: GuitarProps) => void;
-}) => {
+const Guitar = ({ guitarData, addToCart }: GuitarProps) => {
     const { name, image, description, price } = guitarData;
 
     return (

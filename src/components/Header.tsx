@@ -1,4 +1,4 @@
-import { GuitarProps } from '../types/GuitarProps';
+import { HeaderProps, CartItem } from '../types';
 
 const Header = ({
     cart,
@@ -8,15 +8,7 @@ const Header = ({
     cleanCart,
     isEmpty,
     total,
-}: {
-    cart: GuitarProps[];
-    removeFromCart: (id: number) => void;
-    decreaseQty: (id: number) => void;
-    increaseQty: (id: number) => void;
-    cleanCart: () => void;
-    isEmpty: boolean;
-    total: number;
-}) => {
+}: HeaderProps) => {
     return (
         <header className="py-5 header">
             <div className="container-xl">
@@ -57,7 +49,7 @@ const Header = ({
                                             </thead>
                                             <tbody>
                                                 {cart.map(
-                                                    (guitar: GuitarProps) => (
+                                                    (guitar: CartItem) => (
                                                         <tr key={guitar.id}>
                                                             <td>
                                                                 <img

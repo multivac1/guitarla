@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { HeaderProps, CartItem } from '../types';
 
 const Header = ({
@@ -6,9 +7,14 @@ const Header = ({
     decreaseQty,
     increaseQty,
     cleanCart,
-    isEmpty,
-    total,
 }: HeaderProps) => {
+    const isEmpty: boolean = useMemo(() => cart.length === 0, [cart]);
+    const total: number = useMemo(
+        () =>
+            cart.reduce((total, item) => total + item.quantity * item.price, 0),
+        [cart]
+    );
+
     return (
         <header className="py-5 header">
             <div className="container-xl">

@@ -5,7 +5,7 @@ import Guitar from './components/Guitar';
 import { cartReducer, initialState } from './reducers/cart-reducer';
 
 function App() {
-    const { cleanCart, decreaseQty, increaseQty } = useCart();
+    const { cleanCart } = useCart();
 
     const [state, dispatch] = useReducer(cartReducer, initialState);
 
@@ -17,8 +17,6 @@ function App() {
                 cart={state.cart}
                 cleanCart={cleanCart}
                 dispatch={dispatch}
-                decreaseQty={decreaseQty}
-                increaseQty={increaseQty}
             />
 
             <main className="container-xl mt-5">

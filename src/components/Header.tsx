@@ -1,13 +1,7 @@
 import { useMemo } from 'react';
 import { HeaderProps, CartItem } from '../types';
 
-const Header = ({
-    cart,
-    dispatch,
-    decreaseQty,
-    increaseQty,
-    cleanCart,
-}: HeaderProps) => {
+const Header = ({ cart, dispatch, cleanCart }: HeaderProps) => {
     const isEmpty: boolean = useMemo(() => cart.length === 0, [cart]);
     const total: number = useMemo(
         () =>
@@ -75,8 +69,14 @@ const Header = ({
                                                                     type="button"
                                                                     className="btn btn-dark"
                                                                     onClick={() =>
-                                                                        decreaseQty(
-                                                                            guitar.id
+                                                                        dispatch(
+                                                                            {
+                                                                                type: 'decrease-qty',
+                                                                                payload:
+                                                                                    {
+                                                                                        id: guitar.id,
+                                                                                    },
+                                                                            }
                                                                         )
                                                                     }
                                                                 >
@@ -89,8 +89,14 @@ const Header = ({
                                                                     type="button"
                                                                     className="btn btn-dark"
                                                                     onClick={() =>
-                                                                        increaseQty(
-                                                                            guitar.id
+                                                                        dispatch(
+                                                                            {
+                                                                                type: 'increase-qty',
+                                                                                payload:
+                                                                                    {
+                                                                                        id: guitar.id,
+                                                                                    },
+                                                                            }
                                                                         )
                                                                     }
                                                                 >

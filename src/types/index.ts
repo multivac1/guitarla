@@ -22,7 +22,5 @@ export type CartItem = Omit<Guitar, 'description'> & {
 export type HeaderProps = {
     cart: CartItem[];
     dispatch: Dispatch<CartActions>;
-    decreaseQty: (id: Guitar['id']) => void;
-    increaseQty: (id: Guitar['id']) => void;
     cleanCart: () => void;
 };

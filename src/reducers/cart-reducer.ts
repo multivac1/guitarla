@@ -13,9 +13,15 @@ export type CartState = {
     cart: CartItem[];
 };
 
+const initialCart = (): CartItem[] => {
+    const getCartFromStorage = localStorage.getItem('cart');
+
+    return getCartFromStorage ? JSON.parse(getCartFromStorage) : [];
+};
+
 export const initialState: CartState = {
     data: db,
-    cart: [],
+    cart: initialCart(),
 };
 
 export const cartReducer = (

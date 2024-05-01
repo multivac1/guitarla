@@ -3,7 +3,7 @@ import { HeaderProps, CartItem } from '../types';
 
 const Header = ({
     cart,
-    removeFromCart,
+    dispatch,
     decreaseQty,
     increaseQty,
     cleanCart,
@@ -102,8 +102,14 @@ const Header = ({
                                                                     className="btn btn-danger"
                                                                     type="button"
                                                                     onClick={() =>
-                                                                        removeFromCart(
-                                                                            guitar.id
+                                                                        dispatch(
+                                                                            {
+                                                                                type: 'remove-from-cart',
+                                                                                payload:
+                                                                                    {
+                                                                                        id: guitar.id,
+                                                                                    },
+                                                                            }
                                                                         )
                                                                     }
                                                                 >

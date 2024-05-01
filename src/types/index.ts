@@ -22,5 +22,4 @@ export type CartItem = Omit<Guitar, 'description'> & {
 export type HeaderProps = {
     cart: CartItem[];
     dispatch: Dispatch<CartActions>;
-    cleanCart: () => void;
 };
